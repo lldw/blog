@@ -31,7 +31,7 @@ public class ArticleController {
      * @returngiot
      */
     @PostMapping("hot")
-    public Result hotArticle() {
+    public Result hotArticle()  {
        int limit = 5;
        return articleService.hotArticle(limit);
 
