@@ -3,10 +3,13 @@ package com.wle.blog.service.iml;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.wle.blog.dos.Archives;
+import com.wle.blog.mapper.ArticleBodyMapper;
 import com.wle.blog.mapper.ArticlesMapper;
 import com.wle.blog.pojo.Article;
+import com.wle.blog.pojo.ArticleBody;
 import com.wle.blog.service.ArticleService;
 import com.wle.blog.service.SysUserService;
+import com.wle.blog.vo.ArticleBodyVo;
 import com.wle.blog.vo.ArticleVo;
 
 import com.wle.blog.vo.Result;
@@ -21,6 +24,7 @@ import java.util.List;
 
 @Service
 public class ArticlesServiceImpl implements ArticleService {
+
     @Autowired
     private ArticlesMapper articlesMapper;
     @Autowired
@@ -43,6 +47,40 @@ public class ArticlesServiceImpl implements ArticleService {
             articleVo.setAuthor(userService.getSysuserById(authorId).getNickname());
         };
         return articleVo;
+    }
+    public ArticleVo copy(Article articles,boolean isTag ,boolean isAuthor,boolean isBody,boolean isCategory) {
+        ArticleVo articleVo = new ArticleVo();
+        BeanUtils.copyProperties(articles, articleVo);
+        articleVo.setCreateDate(new DateTime(articles.getCreateDate()).toString("yyyy-MM-dd"));
+
+        if (isTag){
+            Long id = articles.getId();
+            articleVo.setTags(tagService.listTagById(id));
+        };
+        if (isAuthor) {
+            Long authorId = articles.getAuthorId();
+            articleVo.setAuthor(userService.getSysuserById(authorId).getNickname());
+        };
+        if (isBody) {
+            Long bodyId = articles.getBodyId();
+            articleVo.setArticleBody(findArticleBodyById(bodyId));
+        }
+        if (isCategory) {
+
+        }
+        return articleVo;
+    }
+
+    /**
+     * 查询文章内容
+     * @param bodyId
+     * @return
+     */
+    private ArticleBodyVo findArticleBodyById(Long bodyId) {
+        ArticleBody content = bodyMapper.selectById(bodyId);
+        ArticleBodyVo articleBodyVo = new ArticleBodyVo();
+        articleBodyVo.setContent(content.getContent());
+        return articleBodyVo;
     }
 
     private List<ArticleVo> copyList(List<Article> records,boolean isTag ,boolean isAuthor ) {
@@ -105,6 +143,19 @@ public class ArticlesServiceImpl implements ArticleService {
     public Result listArchives() {
         List<Archives> archives = articlesMapper.listArchives();
         return Result.success(archives);
+    }
+
+    /**
+     * 文章详情
+     * @param articleId
+     * @return
+     */
+    @Autowired
+    private ArticleBodyMapper bodyMapper;
+    @Override
+    public Result findArticleById(Long articleId) {
+        ArticleVo articleVo = copy(articlesMapper.selectById(articleId), true, true);
+        return Result.success(articleVo);
     }
 
 

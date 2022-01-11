@@ -14,10 +14,12 @@ import io.jsonwebtoken.Jwt;
 import io.jsonwebtoken.Jwts;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -25,12 +27,15 @@ import java.util.concurrent.TimeUnit;
 @Transactional
 @Service
 public class LoginServiceImpl implements LoginService {
-    private static final String slat = "mszlu!@#";
+
     @Autowired
+    @Lazy
     private SysUserService sysUserService;
+
     @Autowired
     private RedisTemplate<String, String> redisTemplate;
 
+    private static final String slat = "mszlu!@#";
 
     /**
      * 登录
@@ -82,7 +87,7 @@ public class LoginServiceImpl implements LoginService {
         if (StringUtils.isBlank(account) || StringUtils.isBlank(password) || StringUtils.isBlank(nickname)) {
             return Result.fail(ErrorCode.PARAMS_ERROR.getCode(), ErrorCode.PARAMS_ERROR.getMsg());
         }
-        SysUser sysUser = sysUserService.findUserByAccount(account);
+        SysUser sysUser = this.sysUserService.findUserByAccount(account);
         if (sysUser != null) {
             return Result.fail(ErrorCode.ACCOUNT_PWD_NOT_EXIST.getCode(), ErrorCode.ACCOUNT_PWD_NOT_EXIST.getMsg());
         }

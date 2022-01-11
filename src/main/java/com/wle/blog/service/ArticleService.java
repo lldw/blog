@@ -10,11 +10,13 @@ import java.util.List;
 
 public interface ArticleService {
 
-     List<ArticleVo> listArticlesPage(PageParams pageParams);
+    List<ArticleVo> listArticlesPage(PageParams pageParams);
 
-     Result hotArticle(int limit);
+    Result hotArticle(int limit);
 
-     Result newArticle(int limit);
+    Result newArticle(int limit);
 
-     Result listArchives();
+    Result listArchives();
+
+    Result findArticleById(Long articleId);
 }

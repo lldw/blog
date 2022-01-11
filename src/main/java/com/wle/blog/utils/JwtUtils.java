@@ -14,7 +14,7 @@ public class JwtUtils {
     public static String creatToken(Long userId) {
         HashMap<String, Object> map = new HashMap<>();
         map.put("userId", userId);
-        JwtBuilder builder = Jwts.builder().signWith(SignatureAlgorithm.ES256,jwtToken)
+        JwtBuilder builder = Jwts.builder().signWith(SignatureAlgorithm.HS256,jwtToken)
                 .setClaims(map)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + 24 * 60 * 60 * 60 * 1000));

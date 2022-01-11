@@ -28,16 +28,19 @@ public class ArticleController {
 
     /**
      * 最热文章
+     *
      * @returngiot
      */
     @PostMapping("hot")
-    public Result hotArticle()  {
-       int limit = 5;
-       return articleService.hotArticle(limit);
+    public Result hotArticle() {
+        int limit = 5;
+        return articleService.hotArticle(limit);
 
     }
+
     /**
      * 最新文章
+     *
      * @return
      */
     @PostMapping("new")
@@ -45,12 +48,24 @@ public class ArticleController {
         int limit = 5;
         return articleService.newArticle(limit);
     }
+
     /**
      * 文章归档
+     *
      * @return
      */
     @PostMapping("listArchives")
     public Result listArchives() {
         return articleService.listArchives();
+    }
+
+    /**
+     * 文章详情
+     * @param ArticleId
+     * @return
+     */
+    @PostMapping
+    public Result findArticleById(Long articleId) {
+     return articleService.findArticleById(articleId);
     }
 }

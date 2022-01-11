@@ -1,5 +1,8 @@
 package com.wle.blog.pojo;
 
+import com.wle.blog.vo.ArticleBodyVo;
+import com.wle.blog.vo.ArticleVo;
+import com.wle.blog.vo.CategoryVo;
 import lombok.Data;
 
 @Data

@@ -11,19 +11,23 @@ import com.wle.blog.vo.LoginUserVo;
 import com.wle.blog.vo.Result;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 
-
+@Transactional
 @Service
 public class SysUserServiceImpl implements SysUserService {
+
     @Autowired
     private SysUserMapper userMapper;
     @Autowired
-    private LoginService loginService;
-    @Autowired
     private RedisTemplate<String, String> redisTemplate;
+    @Autowired
+    @Lazy
+    private LoginService loginService;
 
     /**
      * 查询用户是否存在
@@ -69,7 +73,7 @@ public class SysUserServiceImpl implements SysUserService {
 
     @Override
     public Result getUserInfoByToken(String token) {
-        SysUser user = loginService.checkToken(token);
+        SysUser user = this.loginService.checkToken(token);
         if (user == null) {
             return Result.fail(ErrorCode.NO_LOGIN.getCode(), ErrorCode.NO_LOGIN.getMsg());
         }
@@ -92,7 +96,7 @@ public class SysUserServiceImpl implements SysUserService {
      */
     @Override
     public void save(SysUser sysUser) {
-        userMapper.insert(sysUser);
+        this.userMapper.insert(sysUser);
 
     }
 }
