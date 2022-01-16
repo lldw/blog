@@ -61,11 +61,12 @@ public class ArticleController {
 
     /**
      * 文章详情
-     * @param ArticleId
+     * @param id
      * @return
      */
-    @PostMapping
-    public Result findArticleById(Long articleId) {
-     return articleService.findArticleById(articleId);
+    @PostMapping("view/{id}")
+    public Result findArticleById(@PathVariable("id") Long id) {
+        ArticleVo articleVo = articleService.findArticleById(id);
+        return Result.success(articleVo);
     }
 }

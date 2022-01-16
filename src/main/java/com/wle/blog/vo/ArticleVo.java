@@ -26,7 +26,7 @@ public class ArticleVo {
 
     private String author;
 
-    private ArticleBodyVo articleBody;
+    private ArticleBodyVo body;
 
     private CategoryVo category;
 
