@@ -12,7 +12,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("articles")
-
 public class ArticleController {
 
     @Autowired
@@ -61,11 +60,11 @@ public class ArticleController {
 
     /**
      * 文章详情
-     * @param ArticleId
+     * @param articleId
      * @return
      */
-    @PostMapping
-    public Result findArticleById(Long articleId) {
+    @PostMapping("view/{id}")
+    public Result findArticleById(@PathVariable("id") Long articleId) {
      return articleService.findArticleById(articleId);
     }
 }
