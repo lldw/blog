@@ -85,6 +85,15 @@ public class ArticlesServiceImpl implements ArticleService {
         return articleVo;
     }
 
+
+    public List<ArticleVo> copyList(List<Article> records, boolean isTag, boolean isAuthor) {
+        ArrayList<ArticleVo> articleVos = new ArrayList<>();
+        for (Article record : records) {
+            articleVos.add(copy(record, isTag, isAuthor));
+        }
+        return articleVos;
+    }
+
     /**
      * 获取分类
      *
@@ -113,13 +122,6 @@ public class ArticlesServiceImpl implements ArticleService {
         return articleBodyVo;
     }
 
-    public List<ArticleVo> copyList(List<Article> records, boolean isTag, boolean isAuthor) {
-        ArrayList<ArticleVo> articleVos = new ArrayList<>();
-        for (Article record : records) {
-            articleVos.add(copy(record, isTag, isAuthor));
-        }
-        return articleVos;
-    }
 
     /**
      * 分页查询
