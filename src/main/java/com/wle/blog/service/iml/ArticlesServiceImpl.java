@@ -188,5 +188,4 @@ public class ArticlesServiceImpl implements ArticleService {
         return Result.success(copy(article, true, true, true, true));
     }
 
-
 }
