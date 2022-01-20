@@ -1,14 +1,21 @@
 package com.wle.blog.controller;
 
+import com.wle.blog.service.CommentsService;
+import com.wle.blog.vo.CommentVo;
 import com.wle.blog.vo.Result;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.wle.blog.vo.params.CommentParams;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+import static net.sf.jsqlparser.parser.feature.Feature.comment;
 
 @RestController
 @RequestMapping("comments")
 public class CommentsController {
+    @Autowired
+    private CommentsService commentsService;
     /**
      * 获取文章评论
      * @param id
@@ -16,7 +23,10 @@ public class CommentsController {
      */
     @PostMapping("article/{id}")
     public Result commentsByArticleId(@PathVariable("id") Long id) {
-
-        return Result.success(null);
+        List<CommentVo> commentVos = commentsService.findCommentById(id);
+        return Result.success(commentVos);
+    }
+    public Result comment(@RequestBody CommentParams commentParams){
+        commentsService.comment(commentParams);
     }
 }

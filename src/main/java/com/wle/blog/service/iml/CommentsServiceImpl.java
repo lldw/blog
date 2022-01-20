@@ -9,6 +9,7 @@ import com.wle.blog.service.SysUserService;
 import com.wle.blog.vo.CommentVo;
 import com.wle.blog.vo.Result;
 import com.wle.blog.vo.UserVo;
+import com.wle.blog.vo.params.CommentParams;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,13 +24,23 @@ public class CommentsServiceImpl implements CommentsService {
     @Autowired
     private SysUserService sysUserService;
     @Override
-    public Result findCommentById(Long id) {
+    public List<CommentVo> findCommentById(Long id) {
         LambdaQueryWrapper<Comment> querywapper = new LambdaQueryWrapper<>();
         querywapper.eq(Comment::getArticleId,id);
         querywapper.eq(Comment::getLevel, 1);
         List<Comment> commentsList = commentMapper.selectList(querywapper);
         List<CommentVo> commentVo=copyList(commentsList);
-        return Result.success(commentVo);
+        return commentVo;
+    }
+
+    /**
+     * 评论功能
+     * @param commentParams
+     * @return
+     */
+    @Override
+    public Result comment(CommentParams commentParams) {
+
     }
 
     private List<CommentVo> copyList(List<Comment> commentsList) {
