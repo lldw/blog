@@ -3,7 +3,7 @@ package com.wle.blog.pojo;
 import lombok.Data;
 
 @Data
-public class Comments {
+public class Comment {
     private Long id;
     private String content;
     private Long createDate;
@@ -11,5 +11,5 @@ public class Comments {
     private Long authorId;
     private Long parentId;
     private Long toUid;
-    private String level;
+    private Integer level;
 }

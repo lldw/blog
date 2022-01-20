@@ -4,6 +4,7 @@ package com.wle.blog.service;
 
 import com.wle.blog.pojo.SysUser;
 import com.wle.blog.vo.Result;
+import com.wle.blog.vo.UserVo;
 
 
 public interface SysUserService {
@@ -18,4 +19,5 @@ public interface SysUserService {
 
     void save(SysUser sysUser);
 
+    UserVo findUserVoById(Long authorId);
 }

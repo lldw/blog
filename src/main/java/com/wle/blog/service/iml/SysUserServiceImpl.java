@@ -9,6 +9,7 @@ import com.wle.blog.service.SysUserService;
 import com.wle.blog.vo.ErrorCode;
 import com.wle.blog.vo.LoginUserVo;
 import com.wle.blog.vo.Result;
+import com.wle.blog.vo.UserVo;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -98,5 +99,21 @@ public class SysUserServiceImpl implements SysUserService {
     public void save(SysUser sysUser) {
         this.userMapper.insert(sysUser);
 
+    }
+
+    @Override
+    public UserVo findUserVoById(Long authorId) {
+        SysUser user = userMapper.selectById(authorId);
+        if (user == null) {
+            user = new SysUser();
+            user.setNickname("wll");
+            user.setAvatar("");
+            user.setId(1L);
+        }
+        UserVo userVo = new UserVo();
+        userVo.setId(user.getId());
+        userVo.setAvatar(user.getAvatar());
+        userVo.setNickname(user.getNickname());
+        return userVo;
     }
 }
