@@ -1,8 +1,10 @@
 package com.wle.blog.service.iml;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.wle.blog.mapper.TagMapper;
 import com.wle.blog.pojo.Tag;
 import com.wle.blog.service.TagService;
+import com.wle.blog.vo.Result;
 import com.wle.blog.vo.TagVo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,5 +53,15 @@ public class TagServiceImpl implements TagService {
         }
         List<Tag> tagList = tagMapper.findTagByTagsId(tagIds);
         return copyList(tagList);
+    }
+
+    /**
+     *  查找全部标签
+     * @return
+     */
+    @Override
+    public Result findAll() {
+        List<Tag> tagList = tagMapper.selectList(new LambdaQueryWrapper<>());
+        return Result.success(copyList(tagList));
     }
 }

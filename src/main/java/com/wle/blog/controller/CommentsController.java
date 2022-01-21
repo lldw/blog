@@ -26,7 +26,8 @@ public class CommentsController {
         List<CommentVo> commentVos = commentsService.findCommentById(id);
         return Result.success(commentVos);
     }
+  @PostMapping("/comments/create/change")
     public Result comment(@RequestBody CommentParams commentParams){
-        commentsService.comment(commentParams);
+       return commentsService.comment(commentParams);
     }
 }

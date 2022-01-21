@@ -67,4 +67,13 @@ public class ArticleController {
     public Result findArticleById(@PathVariable("id") Long articleId) {
      return articleService.findArticleById(articleId);
     }
+
+    /**
+     *发布文章
+     * @return
+     */
+    public Result publish(){
+
+        return Result.success(null);
+    }
 }
